@@ -1,3 +1,6 @@
+import { ViewUser } from './types';
+import { UserDocument } from './domainUser';
+
 export class DtoUser {
   createdAt: string;
 
@@ -8,13 +11,13 @@ export class DtoUser {
   ) {
     this.createdAt = new Date().toISOString();
   }
-}
 
-export class ViewUser {
-  constructor(
-    public id: string,
-    public login: string,
-    public email: string,
-    public createdAt: string,
-  ) {}
+  static getViewModel(user: UserDocument): ViewUser {
+    return {
+      id: user._id.toString(),
+      login: user.login,
+      email: user.email,
+      createdAt: user.createdAt,
+    };
+  }
 }

@@ -1,7 +1,7 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { UsersService } from './user.service';
-import { CreateUserInputModel } from './types';
-import { ViewUser } from './classes';
+import { CreateUserInputModel, UserQueryParams, ViewUser } from './types';
+import { UserQueryRepository } from './user.query-repository';
 
 /*@Controller('users')--это эндпоинт-урл адрес на который 
 будут приходить запросы*/
@@ -18,7 +18,10 @@ export class UsersController {
   /* Здесь используется механизм внедрения зависимостей.
     Когда экземпляр AppController создается, NestJS автоматически
    внедряет экземпляр AppService*/
-  constructor(protected usersService: UsersService) {}
+  constructor(
+    protected usersService: UsersService,
+    protected userQueryRepository: UserQueryRepository,
+  ) {}
 
   @Post()
   /* ИЗ БОДИ ВОЗМУ ПРИХОДЯЩИЕ ДАННЫЕ
@@ -31,8 +34,9 @@ export class UsersController {
     return res;
   }
 
-  /*  @Get()
-    getUsers(@Query() queryParams: UserQueryParams) {
-      const users = await userQueryRepository.getUsers;
-    }*/
+  @Get()
+  async getUsers(@Query() queryParams: UserQueryParams) {
+    const users = await this.userQueryRepository.getUsers(queryParams);
+    return users;
+  }
 }

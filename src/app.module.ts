@@ -6,6 +6,7 @@ import { UsersController } from './feature/users/user.controller';
 import { UsersService } from './feature/users/user.service';
 import { UsersRepository } from './feature/users/user.repository';
 import { User, UserSchema } from './feature/users/domainUser';
+import { UserQueryRepository } from './feature/users/user.query-repository';
 
 /*декоратора @Module()---ЭТО КАК В ЭКСПРЕС КОМПОЗИШЕН-РУУТ..
 в NestJS используются для организации
@@ -40,7 +41,7 @@ import { User, UserSchema } from './feature/users/domainUser';
   /*все контроллеры приложения должны тут добавлены */
   controllers: [AppController, UsersController],
   /* все сервисы приложения должны тут добавлены */
-  providers: [AppService, UsersService, UsersRepository],
+  providers: [AppService, UsersService, UsersRepository, UserQueryRepository],
 })
 /*export class AppModule {} в данном контексте
 представляет сам модуль. То что собрано -сконфигурировано

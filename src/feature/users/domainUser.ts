@@ -1,7 +1,11 @@
 import { HydratedDocument } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 /*описана типизация умного обьекта  полученный
- с помощью Mongoose */
+ с помощью Mongoose
+ такой типизацией можно типизировать документ
+    до обращения в базу данных и у него еще не
+    будет (_id)   и такойже типизацией можно
+    типизировать после обращения к базе данных*/
 export type UserDocument = HydratedDocument<User>;
 ///////////////////////
 /*

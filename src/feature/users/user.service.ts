@@ -3,8 +3,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { User, UserDocument } from './domainUser';
 import { UsersRepository } from './user.repository';
-import { CreateUserInputModel } from './types';
-import { DtoUser, ViewUser } from './classes';
+import { CreateUserInputModel, ViewUser } from './types';
+import { DtoUser } from './classes';
 
 @Injectable()
 /*@Injectable()-декоратор что данный клас инжектируемый
@@ -28,7 +28,7 @@ export class UsersService {
   async createUser(createUserInputModel: CreateUserInputModel) {
     const passwordHash = createUserInputModel.password;
 
-    const dto: DtoUser = new DtoUser(
+    const dtoUser: DtoUser = new DtoUser(
       createUserInputModel.login,
       passwordHash,
       createUserInputModel.email,
@@ -39,17 +39,21 @@ export class UsersService {
         обьект с значениями которые нужны (согластно 
          СВАГЕРА) для зоздания нового юзера )) КЛАСС-МОДЕЛЬКА  ЭТО ЗАВИСИМОСТЬ -ПОЭТОМУ В НУТРИ МЕТОДА
          ОБРАЩЕНИЕ ИДЕТ ЧЕРЕЗ  this*/
-    const newUser: UserDocument = new this.userModel(dto);
-    const user = await this.usersRepository.createUser(newUser);
+    const newUser: UserDocument = new this.userModel(dtoUser);
+
+    /*типизация умного экземпляра будет
+    export type UserDocument = HydratedDocument<User>;
+такой типизацией можно типизировать документ
+    до обращения в базу данных и у него еще не
+    будет (_id)   и такойже типизацией можно
+    типизировать после обращения к базе данных*/
+
+    const user: UserDocument = await this.usersRepository.createUser(newUser);
 
     /*  теперь надо создать структуру которую
       ожидает фронтенд (cогласно Swager)*/
-    const viewUser: ViewUser = new ViewUser(
-      user._id.toString(),
-      user.login,
-      user.email,
-      user.createdAt,
-    );
+
+    const viewUser: ViewUser = DtoUser.getViewModel(user);
 
     return viewUser;
   }
