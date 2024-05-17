@@ -5,6 +5,7 @@ import { User, UserDocument } from './domainUser';
 import { UsersRepository } from './user.repository';
 import { CreateUserInputModel, ViewUser } from './types';
 import { DtoUser } from './classes';
+import { Types } from 'mongoose';
 
 @Injectable()
 /*@Injectable()-декоратор что данный клас инжектируемый
@@ -56,5 +57,17 @@ export class UsersService {
     const viewUser: ViewUser = DtoUser.getViewModel(user);
 
     return viewUser;
+  }
+
+  async deleteUserById(userId: string) {
+    const result = await this.userModel.deleteOne({
+      _id: new Types.ObjectId(userId),
+    });
+
+    /*Переменная result будет содержать обьект и в нем несколько
+    свойств ---использую свойство  deletedCount: число,
+     представляющее количество удаленных документов.
+      и преобразую число в булевое значение */
+    return !!result.deletedCount;
   }
 }
