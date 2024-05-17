@@ -1,6 +1,7 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { UsersService } from './user.service';
-import { CreateUserInputModel, OutputUser } from './types';
+import { CreateUserInputModel } from './types';
+import { ViewUser } from './classes';
 
 /*@Controller('users')--это эндпоинт-урл адрес на который 
 будут приходить запросы*/
@@ -25,8 +26,13 @@ export class UsersController {
   в постмане когда запрос отправляю это обьект с
   данными*/
   async createUser(@Body() createUserInputModel: CreateUserInputModel) {
-    const res: OutputUser =
+    const res: ViewUser =
       await this.usersService.createUser(createUserInputModel);
     return res;
   }
+
+  /*  @Get()
+    getUsers(@Query() queryParams: UserQueryParams) {
+      const users = await userQueryRepository.getUsers;
+    }*/
 }

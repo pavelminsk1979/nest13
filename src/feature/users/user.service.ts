@@ -3,7 +3,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { User, UserDocument } from './domainUser';
 import { UsersRepository } from './user.repository';
-import { CreateUserInputModel, OutputUser } from './types';
+import { CreateUserInputModel } from './types';
+import { DtoUser, ViewUser } from './classes';
 
 @Injectable()
 /*@Injectable()-декоратор что данный клас инжектируемый
@@ -26,12 +27,13 @@ export class UsersService {
 
   async createUser(createUserInputModel: CreateUserInputModel) {
     const passwordHash = createUserInputModel.password;
-    const dto = {
-      login: createUserInputModel.login,
+
+    const dto: DtoUser = new DtoUser(
+      createUserInputModel.login,
       passwordHash,
-      email: createUserInputModel.email,
-      createdAt: new Date().toISOString(),
-    };
+      createUserInputModel.email,
+    );
+
     /*    тут создаю нового юзера---использую МОДЕЛЬКУ ЮЗЕРА(это
         класс и при создании классу передаю данные в dto (это
         обьект с значениями которые нужны (согластно 
@@ -42,13 +44,13 @@ export class UsersService {
 
     /*  теперь надо создать структуру которую
       ожидает фронтенд (cогласно Swager)*/
-    const responseUser: OutputUser = {
-      id: user._id.toString(),
-      login: user.login,
-      email: user.email,
-      createdAt: user.createdAt,
-    };
+    const viewUser: ViewUser = new ViewUser(
+      user._id.toString(),
+      user.login,
+      user.email,
+      user.createdAt,
+    );
 
-    return responseUser;
+    return viewUser;
   }
 }
