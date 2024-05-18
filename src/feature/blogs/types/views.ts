@@ -1,9 +1,3 @@
-export type CreateBlogInputModel = {
-  name: string;
-  description: string;
-  websiteUrl: string;
-};
-
 export type ViewBlog = {
   id: string;
   name: string;
@@ -11,4 +5,12 @@ export type ViewBlog = {
   websiteUrl: string;
   createdAt: string;
   isMembership: boolean;
+};
+
+export type ViewArrayBlog = {
+  pagesCount: number;
+  page: number;
+  pageSize: number;
+  totalCount: number;
+  items: ViewBlog[];
 };

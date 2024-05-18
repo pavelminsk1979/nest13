@@ -1,10 +1,10 @@
 import { Model } from 'mongoose';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { User, UserDocument } from './domainUser';
-import { UsersRepository } from './user.repository';
-import { CreateUserInputModel, ViewUser } from './types';
-import { DtoUser } from './classes';
+import { User, UserDocument } from '../domains/domain-user';
+import { UsersRepository } from '../repositories/user-repository';
+import { CreateUserInputModel, ViewUser } from '../types';
+import { DtoUser } from '../classes';
 import { Types } from 'mongoose';
 
 @Injectable()

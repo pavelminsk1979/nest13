@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { UserDocument } from './domainUser';
+import { UserDocument } from '../domains/domain-user';
 
 @Injectable()
 /*@Injectable()-декоратор что данный клас инжектируемый

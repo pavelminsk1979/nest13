@@ -2,15 +2,16 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
-import { UsersController } from './feature/users/user.controller';
-import { UsersService } from './feature/users/user.service';
-import { UsersRepository } from './feature/users/user.repository';
-import { User, UserSchema } from './feature/users/domainUser';
-import { UserQueryRepository } from './feature/users/user.query-repository';
-import { BlogController } from './feature/blogs/blog.controller';
-import { BlogShema } from './feature/blogs/domainBlog';
-import { BlogRepository } from './feature/blogs/blog.repository';
-import { BlogService } from './feature/blogs/blog.service';
+import { UsersController } from './feature/users/api/user-controller';
+import { UsersService } from './feature/users/services/user-service';
+import { UsersRepository } from './feature/users/repositories/user-repository';
+import { User, UserSchema } from './feature/users/domains/domain-user';
+import { UserQueryRepository } from './feature/users/repositories/user-query-repository';
+import { BlogController } from './feature/blogs/api/blog-controller';
+import { BlogShema } from './feature/blogs/domains/domain-blog';
+import { BlogRepository } from './feature/blogs/repositories/blog-repository';
+import { BlogService } from './feature/blogs/services/blog-service';
+import { BlogQueryRepository } from './feature/blogs/repositories/blog-query-repository';
 
 /*декоратора @Module()---ЭТО КАК В ЭКСПРЕС КОМПОЗИШЕН-РУУТ..
 в NestJS используются для организации
@@ -53,6 +54,7 @@ import { BlogService } from './feature/blogs/blog.service';
     UserQueryRepository,
     BlogService,
     BlogRepository,
+    BlogQueryRepository,
   ],
 })
 /*export class AppModule {} в данном контексте
