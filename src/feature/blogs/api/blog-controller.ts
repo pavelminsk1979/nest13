@@ -8,11 +8,16 @@ import {
   NotFoundException,
   Param,
   Post,
+  Put,
   Query,
 } from '@nestjs/common';
 import { BlogService } from '../services/blog-service';
 import { BlogQueryRepository } from '../repositories/blog-query-repository';
-import { BlogQueryParams, CreateBlogInputModel } from '../types/models';
+import {
+  BlogQueryParams,
+  CreateBlogInputModel,
+  UpdateBlogInputModel,
+} from '../types/models';
 import { ViewBlog } from '../types/views';
 
 @Controller('blogs')
@@ -65,6 +70,26 @@ export class BlogController {
     } else {
       throw new NotFoundException(
         'blog not found:andpoint-delete,url /blogs/id',
+      );
+    }
+  }
+
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @Put(':id')
+  async updateBlog(
+    @Param('id') bologId: string,
+    @Body() updateBlogInputModel: UpdateBlogInputModel,
+  ) {
+    const isUpdateBlog = await this.blogService.updateBlog(
+      bologId,
+      updateBlogInputModel,
+    );
+
+    if (isUpdateBlog) {
+      return;
+    } else {
+      throw new NotFoundException(
+        'blog not update:andpoint-put ,url /blogs/id',
       );
     }
   }

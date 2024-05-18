@@ -3,9 +3,9 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { User, UserDocument } from '../domains/domain-user';
 import { UsersRepository } from '../repositories/user-repository';
-import { CreateUserInputModel, ViewUser } from '../types';
-import { DtoUser } from '../classes';
 import { Types } from 'mongoose';
+import { CreateUserInputModel } from '../types/models';
+import { CreateUserDto } from '../dto/create-user-dto';
 
 @Injectable()
 /*@Injectable()-декоратор что данный клас инжектируемый
@@ -29,7 +29,7 @@ export class UsersService {
   async createUser(createUserInputModel: CreateUserInputModel) {
     const passwordHash = createUserInputModel.password;
 
-    const dtoUser: DtoUser = new DtoUser(
+    const dtoUser: CreateUserDto = new CreateUserDto(
       createUserInputModel.login,
       passwordHash,
       createUserInputModel.email,
@@ -49,14 +49,9 @@ export class UsersService {
     будет (_id)   и такойже типизацией можно
     типизировать после обращения к базе данных*/
 
-    const user: UserDocument = await this.usersRepository.createUser(newUser);
+    const user: UserDocument = await this.usersRepository.save(newUser);
 
-    /*  теперь надо создать структуру которую
-      ожидает фронтенд (cогласно Swager)*/
-
-    const viewUser: ViewUser = DtoUser.getViewModel(user);
-
-    return viewUser;
+    return user._id.toString();
   }
 
   async deleteUserById(userId: string) {

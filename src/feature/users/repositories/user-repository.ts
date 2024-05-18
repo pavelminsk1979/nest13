@@ -6,7 +6,7 @@ import { UserDocument } from '../domains/domain-user';
  * ОБЯЗАТЕЛЬНО ДОБАВЛЯТЬ UsersRepository В ФАЙЛ app.module
  * providers: [AppService,UsersService,UsersRepository]*/
 export class UsersRepository {
-  async createUser(newUser: UserDocument) {
+  async save(newUser: UserDocument) {
     return newUser.save();
   }
 }

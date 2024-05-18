@@ -13,3 +13,9 @@ export type BlogQueryParams = {
   pageNumber?: number;
   pageSize?: number;
 };
+
+export type UpdateBlogInputModel = {
+  name: string;
+  description: string;
+  websiteUrl: string;
+};

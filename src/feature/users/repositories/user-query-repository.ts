@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { User, UserDocument } from '../domains/domain-user';
 import { Model, Types } from 'mongoose';
-import { DtoUser } from '../classes';
 import { UserViewDto } from '../dto/create-user-view-dto';
 import { UserQueryParams } from '../types/models';
 import { ViewArrayUsers, ViewUser } from '../types/views';
@@ -156,7 +155,7 @@ pagesCount это число
     const pagesCount: number = Math.ceil(totalCount / sort.pageSize);
 
     const arrayUsers: ViewUser[] = users.map((user: UserDocument) => {
-      return DtoUser.getViewModel(user);
+      return UserViewDto.getViewModel(user);
     });
 
     /* создаю обьект который ожидают на фронте

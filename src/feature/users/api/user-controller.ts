@@ -44,7 +44,7 @@ export class UsersController {
   в постмане когда запрос отправляю это обьект с
   данными*/
   async createUser(@Body() createUserInputModel: CreateUserInputModel) {
-    const id = await this.usersService.createUser(createUserInputModel);
+    const id: string = await this.usersService.createUser(createUserInputModel);
 
     const user = await this.userQueryRepository.getUserById(id);
 

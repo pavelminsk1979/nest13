@@ -4,7 +4,7 @@ import { Model } from 'mongoose';
 import { BlogDocument } from '../domains/domain-blog';
 import { CreateBlogDto } from '../dto/create-blog-dto';
 import { BlogRepository } from '../repositories/blog-repository';
-import { CreateBlogInputModel } from '../types/models';
+import { CreateBlogInputModel, UpdateBlogInputModel } from '../types/models';
 
 @Injectable()
 export class BlogService {
@@ -34,5 +34,12 @@ export class BlogService {
 
   async deleteBlogById(blogId: string) {
     return this.blogRepository.deleteBlogById(blogId);
+  }
+
+  async updateBlog(
+    bologId: string,
+    updateBlogInputModel: UpdateBlogInputModel,
+  ) {
+    return this.blogRepository.updateBlog(bologId, updateBlogInputModel);
   }
 }

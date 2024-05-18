@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { BlogDocument } from '../domains/domain-blog';
 import { Model, Types } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
+import { UpdateBlogInputModel } from '../types/models';
 
 @Injectable()
 export class BlogRepository {
@@ -17,5 +18,28 @@ export class BlogRepository {
     });
 
     return !!result.deletedCount;
+  }
+
+  async updateBlog(
+    bologId: string,
+    updateBlogInputModel: UpdateBlogInputModel,
+  ) {
+    const { name, websiteUrl, description } = updateBlogInputModel;
+
+    const result = await this.blogModel.updateOne(
+      {
+        _id: new Types.ObjectId(bologId),
+      },
+
+      {
+        $set: {
+          name: name,
+          description: description,
+          websiteUrl: websiteUrl,
+        },
+      },
+    );
+
+    return !!result.matchedCount;
   }
 }
