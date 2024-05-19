@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
-import { BlogDocument } from '../domains/domain-blog';
+import { Blog, BlogDocument } from '../domains/domain-blog';
 import { BlogViewDto } from '../dto/create-blog-view-dto';
 import { BlogQueryParams } from '../types/models';
 import { ViewArrayBlog, ViewBlog } from '../types/views';
 
 @Injectable()
 export class BlogQueryRepository {
-  constructor(@InjectModel(Blob.name) private blogModel: Model<BlogDocument>) {}
+  constructor(@InjectModel(Blog.name) private blogModel: Model<BlogDocument>) {}
 
   async getBlogs(queryParamsBlog: BlogQueryParams) {
     const { searchNameTerm, sortBy, sortDirection, pageNumber, pageSize } =

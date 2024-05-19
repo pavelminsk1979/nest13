@@ -16,15 +16,19 @@ import { BlogQueryRepository } from '../repositories/blog-query-repository';
 import {
   BlogQueryParams,
   CreateBlogInputModel,
+  CreatePostForBlogInputModel,
   UpdateBlogInputModel,
 } from '../types/models';
 import { ViewBlog } from '../types/views';
+import { PostQueryRepository } from '../../posts/repositories/post-query-repository';
+import { ViewPost } from '../../posts/types/views';
 
 @Controller('blogs')
 export class BlogController {
   constructor(
     protected blogService: BlogService,
     protected blogQueryRepository: BlogQueryRepository,
+    protected postQueryRepository: PostQueryRepository,
   ) {}
 
   @HttpCode(HttpStatus.CREATED)
@@ -90,6 +94,36 @@ export class BlogController {
     } else {
       throw new NotFoundException(
         'blog not update:andpoint-put ,url /blogs/id',
+      );
+    }
+  }
+
+  @HttpCode(HttpStatus.CREATED)
+  @Post(':blogId/posts')
+  async createPostFortBlog(
+    @Param('blogId') blogId: string,
+    @Body() createPostForBlogInputModel: CreatePostForBlogInputModel,
+  ): Promise<ViewPost | null> {
+    const postId: string | null = await this.blogService.createPostForBlog(
+      blogId,
+      createPostForBlogInputModel,
+    );
+
+    if (!postId) {
+      throw new NotFoundException(
+        'Cannot create post because blog does not exist- ' +
+          ':method-post,url -blogs/:blogId /post',
+      );
+    }
+
+    const post: ViewPost | null =
+      await this.postQueryRepository.getPostById(postId);
+
+    if (post) {
+      return post;
+    } else {
+      throw new NotFoundException(
+        'Cannot create post- ' + ':method-post,url -blogs/:blogId /post',
       );
     }
   }

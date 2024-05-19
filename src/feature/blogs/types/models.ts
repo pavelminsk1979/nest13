@@ -19,3 +19,9 @@ export type UpdateBlogInputModel = {
   description: string;
   websiteUrl: string;
 };
+
+export type CreatePostForBlogInputModel = {
+  title: string;
+  shortDescription: string;
+  content: string;
+};

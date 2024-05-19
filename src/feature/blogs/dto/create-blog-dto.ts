@@ -1,12 +1,13 @@
 export class CreateBlogDto {
   createdAt: string;
+  isMembership: boolean;
 
   constructor(
     public name: string,
     public description: string,
     public websiteUrl: string,
-    public isMembership: boolean,
   ) {
     this.createdAt = new Date().toISOString();
+    this.isMembership = false;
   }
 }

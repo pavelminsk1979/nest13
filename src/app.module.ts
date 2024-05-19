@@ -8,10 +8,13 @@ import { UsersRepository } from './feature/users/repositories/user-repository';
 import { User, UserSchema } from './feature/users/domains/domain-user';
 import { UserQueryRepository } from './feature/users/repositories/user-query-repository';
 import { BlogController } from './feature/blogs/api/blog-controller';
-import { BlogShema } from './feature/blogs/domains/domain-blog';
+import { Blog, BlogShema } from './feature/blogs/domains/domain-blog';
 import { BlogRepository } from './feature/blogs/repositories/blog-repository';
 import { BlogService } from './feature/blogs/services/blog-service';
 import { BlogQueryRepository } from './feature/blogs/repositories/blog-query-repository';
+import { Post, PostShema } from './feature/posts/domains/domain-post';
+import { PostRepository } from './feature/posts/repositories/post-repository';
+import { PostQueryRepository } from './feature/posts/repositories/post-query-repository';
 
 /*декоратора @Module()---ЭТО КАК В ЭКСПРЕС КОМПОЗИШЕН-РУУТ..
 в NestJS используются для организации
@@ -41,7 +44,8 @@ import { BlogQueryRepository } from './feature/blogs/repositories/blog-query-rep
         name: User.name,
         schema: UserSchema,
       },
-      { name: Blob.name, schema: BlogShema },
+      { name: Blog.name, schema: BlogShema },
+      { name: Post.name, schema: PostShema },
     ]),
   ],
   /*все контроллеры приложения должны тут добавлены */
@@ -55,6 +59,8 @@ import { BlogQueryRepository } from './feature/blogs/repositories/blog-query-rep
     BlogService,
     BlogRepository,
     BlogQueryRepository,
+    PostRepository,
+    PostQueryRepository,
   ],
 })
 /*export class AppModule {} в данном контексте
