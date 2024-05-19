@@ -15,6 +15,7 @@ import { BlogQueryRepository } from './feature/blogs/repositories/blog-query-rep
 import { Post, PostShema } from './feature/posts/domains/domain-post';
 import { PostRepository } from './feature/posts/repositories/post-repository';
 import { PostQueryRepository } from './feature/posts/repositories/post-query-repository';
+import { PostService } from './feature/posts/services/post-service';
 
 /*декоратора @Module()---ЭТО КАК В ЭКСПРЕС КОМПОЗИШЕН-РУУТ..
 в NestJS используются для организации
@@ -61,6 +62,7 @@ import { PostQueryRepository } from './feature/posts/repositories/post-query-rep
     BlogQueryRepository,
     PostRepository,
     PostQueryRepository,
+    PostService,
   ],
 })
 /*export class AppModule {} в данном контексте
