@@ -25,3 +25,10 @@ export type CreatePostForBlogInputModel = {
   shortDescription: string;
   content: string;
 };
+
+export type QueryParamsPostForBlog = {
+  pageNumber?: number;
+  pageSize?: number;
+  sortBy?: string;
+  sortDirection?: SortDirection;
+};

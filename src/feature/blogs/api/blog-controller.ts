@@ -17,11 +17,12 @@ import {
   BlogQueryParams,
   CreateBlogInputModel,
   CreatePostForBlogInputModel,
+  QueryParamsPostForBlog,
   UpdateBlogInputModel,
 } from '../types/models';
 import { ViewBlog } from '../types/views';
 import { PostQueryRepository } from '../../posts/repositories/post-query-repository';
-import { ViewPost } from '../../posts/types/views';
+import { ViewArrayPosts, ViewPost } from '../../posts/types/views';
 
 @Controller('blogs')
 export class BlogController {
@@ -124,6 +125,26 @@ export class BlogController {
     } else {
       throw new NotFoundException(
         'Cannot create post- ' + ':method-post,url -blogs/:blogId /post',
+      );
+    }
+  }
+
+  @Get(':blogId/posts')
+  async getPostsForBlog(
+    @Param('blogId') blogId: string,
+    @Query() queryParamsPostForBlog: QueryParamsPostForBlog,
+  ): Promise<ViewArrayPosts> {
+    const posts = await this.postQueryRepository.getPosts(
+      blogId,
+      queryParamsPostForBlog,
+    );
+
+    if (posts) {
+      return posts;
+    } else {
+      throw new NotFoundException(
+        'blog or post  is not exists  ' +
+          ':method-get,url -blogs/:blogId /posts',
       );
     }
   }

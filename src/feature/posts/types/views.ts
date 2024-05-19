@@ -27,3 +27,11 @@ export type ViewPost = {
   createdAt: string;
   extendedLikesInfo: ExtendedLikesInfo;
 };
+
+export type ViewArrayPosts = {
+  pagesCount: number;
+  page: number;
+  pageSize: number;
+  totalCount: number;
+  items: ViewPost[];
+};
