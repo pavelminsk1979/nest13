@@ -34,7 +34,11 @@ export class CommentQueryRepository {
     const filter = { postId };
 
     //let comments: CommentDocument[] = await this.commentModel
+    ////////////////////////////////////////
+    /*  верхнюю раскоментировать а эту убрать
+      когда добавиться СОЗДАНИЕ КОМЕНТАРИЕВ*/
     let comments: any = await this.commentModel
+      /////////////////////////////////////
 
       .find(filter)
 
@@ -94,5 +98,27 @@ export class CommentQueryRepository {
     };
 
     return viewComments;
+  }
+
+  async getCommentById(commentId: string) {
+    let comment: any = await this.commentModel.findById(commentId);
+
+    //////////////////////////////////////////
+    //ЭТО ЗАГЛУШКА ПОКАМЕСТЬ НЕТ ДОКУМЕНТОВ comments
+    if (!comment) {
+      comment = {
+        _id: '664a90ce7edbdddca@@@',
+        content: 'content@',
+        commentatorInfo: { userId: 'userId@', userLogin: 'userLogin1' },
+        createdAt: '2024-05-19T23:52:46.1111',
+      };
+    }
+    ////////////////////////////////////////////
+
+    if (comment) {
+      return CommentViewDto.getViewModel(comment);
+    } else {
+      return null;
+    }
   }
 }
