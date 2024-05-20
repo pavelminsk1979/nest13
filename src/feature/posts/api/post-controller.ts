@@ -19,12 +19,16 @@ import {
 import { PostService } from '../services/post-service';
 import { PostQueryRepository } from '../repositories/post-query-repository';
 import { ViewArrayPosts, ViewPost } from '../types/views';
+import { QueryCommentsForPost } from '../../comments/types/models';
+import { CommentQueryRepository } from '../../comments/reposetories/comment-query-repository';
+import { ViewArrayComments } from '../../comments/types/views';
 
 @Controller('posts')
 export class PostsController {
   constructor(
     protected postService: PostService,
     protected postQueryRepository: PostQueryRepository,
+    protected commentQueryRepository: CommentQueryRepository,
   ) {}
 
   @HttpCode(HttpStatus.CREATED)
@@ -118,6 +122,27 @@ export class PostsController {
     } else {
       throw new NotFoundException(
         'post not found:andpoint-delete,url /post/id',
+      );
+    }
+  }
+
+  @Get(':postId/comments')
+  async getCommentsForPost(
+    @Param('postId') postId: string,
+    @Query() queryCommentsForPost: QueryCommentsForPost,
+  ): Promise<ViewArrayComments> {
+    const comments: ViewArrayComments | null =
+      await this.commentQueryRepository.getComments(
+        postId,
+        queryCommentsForPost,
+      );
+
+    if (comments) {
+      return comments;
+    } else {
+      throw new NotFoundException(
+        'post or comments  is not exists  ' +
+          ':method-get,url -posts/postId/comments',
       );
     }
   }

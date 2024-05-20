@@ -17,6 +17,11 @@ import { PostRepository } from './feature/posts/repositories/post-repository';
 import { PostQueryRepository } from './feature/posts/repositories/post-query-repository';
 import { PostService } from './feature/posts/services/post-service';
 import { PostsController } from './feature/posts/api/post-controller';
+import { CommentQueryRepository } from './feature/comments/reposetories/comment-query-repository';
+import {
+  Comment,
+  CommentShema,
+} from './feature/comments/domaims/domain-comment';
 
 /*декоратора @Module()---ЭТО КАК В ЭКСПРЕС КОМПОЗИШЕН-РУУТ..
 в NestJS используются для организации
@@ -48,6 +53,7 @@ import { PostsController } from './feature/posts/api/post-controller';
       },
       { name: Blog.name, schema: BlogShema },
       { name: Post.name, schema: PostShema },
+      { name: Comment.name, schema: CommentShema },
     ]),
   ],
   /*все контроллеры приложения должны тут добавлены */
@@ -69,6 +75,7 @@ import { PostsController } from './feature/posts/api/post-controller';
     PostRepository,
     PostQueryRepository,
     PostService,
+    CommentQueryRepository,
   ],
 })
 /*export class AppModule {} в данном контексте
