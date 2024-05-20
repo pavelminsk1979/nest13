@@ -19,7 +19,6 @@ import {
 import { PostService } from '../services/post-service';
 import { PostQueryRepository } from '../repositories/post-query-repository';
 import { ViewArrayPosts, ViewPost } from '../types/views';
-import { UpdateBlogInputModel } from '../../blogs/types/models';
 
 @Controller('posts')
 export class PostsController {
