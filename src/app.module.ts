@@ -16,6 +16,7 @@ import { Post, PostShema } from './feature/posts/domains/domain-post';
 import { PostRepository } from './feature/posts/repositories/post-repository';
 import { PostQueryRepository } from './feature/posts/repositories/post-query-repository';
 import { PostService } from './feature/posts/services/post-service';
+import { PostsController } from './feature/posts/api/post-controller';
 
 /*декоратора @Module()---ЭТО КАК В ЭКСПРЕС КОМПОЗИШЕН-РУУТ..
 в NestJS используются для организации
@@ -50,7 +51,12 @@ import { PostService } from './feature/posts/services/post-service';
     ]),
   ],
   /*все контроллеры приложения должны тут добавлены */
-  controllers: [AppController, UsersController, BlogController],
+  controllers: [
+    AppController,
+    UsersController,
+    BlogController,
+    PostsController,
+  ],
   /* все сервисы приложения должны тут добавлены */
   providers: [
     AppService,

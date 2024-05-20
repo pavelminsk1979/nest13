@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CreatePostInputModel } from '../types/models';
+import { CreatePostInputModel, UpdatePostInputModel } from '../types/models';
 import { BlogDocument } from '../../blogs/domains/domain-blog';
 import { BlogRepository } from '../../blogs/repositories/blog-repository';
 import { CreatePostDto } from '../dto/create-post-dto';
@@ -43,5 +43,16 @@ export class PostService {
     const post: PostDocument = await this.postRepository.save(newPost);
 
     return post._id.toString();
+  }
+
+  async updatePost(
+    postId: string,
+    updatePostInputModel: UpdatePostInputModel,
+  ): Promise<boolean> {
+    return this.postRepository.updatePost(postId, updatePostInputModel);
+  }
+
+  async deletePostById(postId: string) {
+    return this.postRepository.deletePostById(postId);
   }
 }

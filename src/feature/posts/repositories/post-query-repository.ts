@@ -78,7 +78,7 @@ export class PostQueryRepository {
   }
 
   async getPostById(postId: string): Promise<ViewPost | null> {
-    const post = await this.postModel.findById(postId);
+    const post: PostDocument | null = await this.postModel.findById(postId);
 
     if (post) {
       return PostViewDto.getViewModel(post);
