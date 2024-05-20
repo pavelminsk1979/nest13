@@ -23,6 +23,7 @@ import {
   CommentShema,
 } from './feature/comments/domaims/domain-comment';
 import { CommentController } from './feature/comments/api/comment-controller';
+import { TestController } from './feature/test/test-controller';
 
 /*декоратора @Module()---ЭТО КАК В ЭКСПРЕС КОМПОЗИШЕН-РУУТ..
 в NestJS используются для организации
@@ -64,6 +65,7 @@ import { CommentController } from './feature/comments/api/comment-controller';
     BlogController,
     PostsController,
     CommentController,
+    TestController,
   ],
   /* все сервисы приложения должны тут добавлены */
   providers: [
