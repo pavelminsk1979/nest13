@@ -134,7 +134,7 @@ export class BlogController {
     @Param('blogId') blogId: string,
     @Query() queryParamsPostForBlog: QueryParamsPostForBlog,
   ): Promise<ViewArrayPosts> {
-    const posts = await this.postQueryRepository.getPosts(
+    const posts = await this.postQueryRepository.getPostsByCorrectBlogId(
       blogId,
       queryParamsPostForBlog,
     );

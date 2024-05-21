@@ -62,20 +62,14 @@ export class PostsController {
   async getPosts(
     @Query() queryParamsPost: QueryParamsPost,
   ): Promise<ViewArrayPosts> {
-    /*  blogId взял из Postman  ...  её надо потом брать 
-      из token*/
-
-    const blogId = '66495ce8668106ecdad8a120';
-
     const posts: ViewArrayPosts | null =
-      await this.postQueryRepository.getPosts(blogId, queryParamsPost);
+      await this.postQueryRepository.getPosts(queryParamsPost);
 
     if (posts) {
       return posts;
     } else {
       throw new NotFoundException(
-        'blog or post  is not exists  ' +
-          ':method-get,url -blogs/:blogId /posts',
+        ' post  is not exists  ' + ':method-get,url -posts',
       );
     }
   }
