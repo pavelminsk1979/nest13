@@ -28,19 +28,14 @@ export class BlogQueryRepository {
 
     const sortDirectionValue = sort.sortDirection === 'asc' ? 1 : -1;
 
-    const filter: { $or: object[] } = { $or: [] };
+    const filter: { name?: { $regex: string; $options: string } } = {};
 
     if (sort.searchNameTerm) {
-      filter.$or.push({
-        login: {
-          $regex: sort.searchNameTerm,
-          $options: 'i',
-        },
-      });
+      filter.name = { $regex: sort.searchNameTerm, $options: 'i' };
     }
 
     const blogs: BlogDocument[] = await this.blogModel
-      .find(filter.$or.length ? filter : {})
+      .find(filter)
 
       .sort({ [sort.sortBy]: sortDirectionValue })
 
@@ -50,9 +45,7 @@ export class BlogQueryRepository {
 
       .exec();
 
-    const totalCount: number = await this.blogModel.countDocuments(
-      filter.$or.length ? filter : {},
-    );
+    const totalCount: number = await this.blogModel.countDocuments(filter);
 
     const pagesCount: number = Math.ceil(totalCount / sort.pageSize);
 
