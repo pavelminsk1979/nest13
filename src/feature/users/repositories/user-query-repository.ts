@@ -100,7 +100,7 @@ export class UserQueryRepository {
 
     if (sort.searchEmailTerm) {
       filter.$or.push({
-        login: {
+        email: {
           $regex: sort.searchEmailTerm,
           $options: 'i',
         },
